@@ -1,0 +1,33 @@
+{
+  "name": "dproc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed": "npx sequelize-cli db:seed:all",
+    "make-seed": "npx sequelize-cli seed:generate --name demo-color",
+    "make-model": "npx sequelize-cli model:generate --name Learner_Teacher --attributes id:integer",
+    "migrate": "npx sequelize-cli db:migrate",
+    "undo": "npx sequelize-cli db:migrate:undo",
+    "watch": "nodemon -r esm index.js",
+    "start": "node -r esm index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "esm": "^3.2.25",
+    "express": "^4.18.2",
+    "nodemon": "^2.0.20",
+    "pg": "^8.8.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.25.0"
+  },
+  "devDependencies": {
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "sequelize-cli": "^6.5.1"
+  }
+}
