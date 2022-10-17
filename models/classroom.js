@@ -3,24 +3,24 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Class extends Model {
+  class Classroom extends Model {
     static associate(models) {
-      const {Classroom} = models
-      Class.belongsToMany(Classroom, {
-        foreignKey: 'class_id',
+      const {Class} = models
+      Classroom.belongsToMany(Class, {
+        foreignKey: 'classroom_id',
         joinTableAttributes: [],
         through: {model: 'Class_Classroom', joinTableAttributes: [], attributes: ['id']},
         paranoid: true, raw: true,
-        as: 'classroom'
+        as: 'class'
       })
     }
   }
 
-  Class.init({
-    className: DataTypes.STRING
+  Classroom.init({
+    name: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'Class',
+    modelName: 'Classroom',
   });
-  return Class;
+  return Classroom;
 };

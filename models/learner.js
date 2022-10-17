@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         joinTableAttributes: [],
         through: {model: 'Learner_Teachers', joinTableAttributes: [], attributes: ['id']},
         paranoid: true, raw: true,
-        as: 'colors'
+        as: 'teacher'
       })
     }
   }
