@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed": "npx sequelize-cli db:seed:all",
-    "make-seed": "npx sequelize-cli seed:generate --name demo-color",
-    "make-model": "npx sequelize-cli model:generate --name Hours_Rooms --attributes name:string",
+    "make-seed": "npx sequelize-cli seed:generate --name demo-days",
+    "make-model": "npx sequelize-cli model:generate --name ClassList --attributes name:string",
     "migrate": "npx sequelize-cli db:migrate",
     "undo": "npx sequelize-cli db:migrate:undo",
     "watch": "nodemon -r esm index.js",
@@ -22,7 +22,8 @@
     "nodemon": "^2.0.20",
     "pg": "^8.8.0",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.25.0"
+    "sequelize": "^6.25.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "cookie-parser": "^1.4.6",

@@ -5,22 +5,18 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Class extends Model {
     static associate(models) {
-      const {Classroom} = models
-      Class.belongsToMany(Classroom, {
-        foreignKey: 'class_id',
-        joinTableAttributes: [],
-        through: {model: 'Class_Classroom', joinTableAttributes: [], attributes: ['id']},
-        paranoid: true, raw: true,
-        as: 'classroom'
-      })
+      const {Learner, ClassList} = models
+      Class.hasMany(Learner, { foreignKey: 'class_id' })
+      Class.hasOne(ClassList, {foreignKey: 'class_id'})
     }
   }
 
   Class.init({
-    className: DataTypes.STRING
+    class_type: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Class',
   });
+
   return Class;
 };

@@ -5,12 +5,14 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Floor extends Model {
     static associate(models) {
-      const {School} = models
-      Floor.belongsTo(School, {foreignKey:'school_id'})
+      const {School,Rooms} = models
+      Floor.belongsTo(School, {foreignKey: 'school_id'})
+      Floor.hasMany(Rooms, {foreignKey:'floor_id'})
     }
   }
+
   Floor.init({
-    firstFloor: DataTypes.STRING,
+    floor: DataTypes.STRING,
     school_id: {
       type: DataTypes.INTEGER,
       references: {

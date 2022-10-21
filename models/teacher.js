@@ -5,8 +5,9 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Teacher extends Model {
     static associate(models) {
-      const {School, Learner} = models
-      Teacher.belongsTo(School, {foreignKey:'school_id'})
+      const {School, Learner, Rooms, ClassList} = models
+      Teacher.belongsTo(School, {foreignKey: 'school_id'})
+      Teacher.hasOne(ClassList, {foreignKey: 'teacher_id'})
       Teacher.belongsToMany(Learner, {
         foreignKey: 'teacher_id',
         joinTableAttributes: [],
@@ -18,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   Teacher.init({
-    teacherName: DataTypes.STRING,
+    name: DataTypes.STRING,
     school_id: {
       type: DataTypes.INTEGER,
       references: {

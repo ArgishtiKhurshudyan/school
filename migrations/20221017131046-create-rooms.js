@@ -1,5 +1,4 @@
 'use strict';
-
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Rooms', {
@@ -9,12 +8,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      roomName: {
-        type: Sequelize.STRING,
-        name: "laboratory"
-      },
-      type: {
-        name: "laboratory"
+      floor_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "Floors",
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,

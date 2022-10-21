@@ -8,7 +8,13 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      teacherName: {
+      name: {
+        type: Sequelize.STRING
+      },
+      profession: {
+        type: Sequelize.STRING
+      },
+      gender: {
         type: Sequelize.STRING
       },
       school_id: {
@@ -19,6 +25,7 @@ module.exports = {
           key: 'id'
         }
       },
+
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

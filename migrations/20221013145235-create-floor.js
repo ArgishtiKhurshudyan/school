@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstFloor: {
+      floor: {
         type: Sequelize.STRING
       },
       school_id: {
