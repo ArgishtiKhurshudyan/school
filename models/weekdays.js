@@ -5,7 +5,7 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class WeekDays extends Model {
     static associate(models) {
-      const { ClassList} = models
+      const { ClassList } = models
       WeekDays.hasOne(ClassList, {foreignKey: 'weekday_id'})
     }
   }

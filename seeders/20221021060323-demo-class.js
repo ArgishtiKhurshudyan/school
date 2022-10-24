@@ -7,13 +7,10 @@ module.exports = {
       class_type: '2a',
       createdAt: new Date(),
       updatedAt: new Date()
-
     }], {});
-
   },
 
   async down(queryInterface, Sequelize) {
       await queryInterface.bulkDelete('Classes', null, {});
-
   }
 };

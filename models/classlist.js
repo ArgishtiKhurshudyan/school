@@ -5,7 +5,7 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class ClassList extends Model {
     static associate(models) {
-      const {Learner, Teacher, ScheduleHours, Topic, Class, Rooms, WeekDays} = models
+      const { Learner, Teacher, ScheduleHours, Topic, Class, Rooms, WeekDays } = models
       ClassList.belongsTo(Learner, {foreignKey: 'learner_id'})
       ClassList.belongsTo(Teacher, {foreignKey: 'teacher_id'})
       ClassList.belongsTo(ScheduleHours, {foreignKey: 'scheduleHours_id'})

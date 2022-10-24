@@ -5,7 +5,7 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class ScheduleHours extends Model {
     static associate(models) {
-      const {Class, ClassList} = models
+      const { ClassList } = models
       ScheduleHours.hasOne(ClassList, {foreignKey: 'scheduleHours_id'})
     }
   }
