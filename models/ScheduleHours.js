@@ -11,6 +11,12 @@ module.exports = (sequelize, DataTypes) => {
   }
 
   ScheduleHours.init({
+    start_time: {
+      type: DataTypes.STRING
+    },
+    end_time: {
+      type: DataTypes.STRING
+    },
   }, {
     sequelize,
     modelName: 'ScheduleHours',

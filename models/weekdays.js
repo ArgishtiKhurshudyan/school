@@ -16,6 +16,5 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'WeekDays',
   });
-
   return WeekDays;
 };

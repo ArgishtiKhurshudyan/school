@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       const { Teacher, ClassList, Class } = models
       Learner.belongsTo(Class, {foreignKey: 'class_id'})
-      Learner.hasMany(ClassList, {foreignKey: 'leaner_id'})
+      Learner.hasMany(ClassList, {foreignKey: 'learner_id'})
       Learner.belongsToMany(Teacher, {
         foreignKey: 'learner_id',
         joinTableAttributes: [],
