@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       Teacher.belongsToMany(Learner, {
         foreignKey: 'teacher_id',
         joinTableAttributes: [],
-        through: {model: 'Learner_Teachers', joinTableAttributes: [], attributes: ['id']},
+        through: { model: 'Learner_Teachers',  attributes: ['id'] },
         paranoid: true, raw: true,
         as: 'learner'
       })

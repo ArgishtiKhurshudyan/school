@@ -1,4 +1,4 @@
-import { WeekDays } from '../models'
+import {Teacher, Topic, WeekDays} from '../models'
 
 export const createDay = async (req, res) => {
   try {
@@ -20,5 +20,43 @@ export const getDays = async (req, res) => {
     return res.status(200).json({ data: weekday })
   } catch (err) {
     throw err
+  }
+}
+
+export const updateTDay = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await WeekDays.update(req.body, {
+      where: {
+        id: id
+      }
+    })
+
+    const weekday = await WeekDays.findOne({
+      where: {
+        id: id
+      }
+    })
+    if (!weekday) {
+      return res.status(201).json({ message: "week day not found" })
+    }
+
+    return  res.status(200).json({ message:"week day updated success!", data: weekday })
+  } catch (err) {
+    console.log("err", err)
+  }
+}
+
+export const deleteDay = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await WeekDays.destroy({
+      where: {
+        id: id
+      }
+    })
+    return  res.status(200).json({ message: "week day deleted success!" })
+  } catch(err) {
+    console.log("err", err)
   }
 }
