@@ -13,6 +13,9 @@ import roomRouter from './routes/room'
 import schoolRouter from './routes/school'
 import topicRouter from './routes/topic'
 import wekDayRouter from './routes/learner'
+import roleRouter from './routes/role'
+import userRouter from './routes/user'
+import authRouter from './routes/auth'
 
 dotenv.config()
 
@@ -32,8 +35,11 @@ app.use('/api/weekDay', wekDayRouter)
 app.use('/api/topic', topicRouter)
 app.use('/api/classHour', classHourRouter)
 app.use('/api/room', roomRouter)
+app.use('/api/role', roleRouter)
+app.use('/api/user', userRouter)
+app.use('/api/auth', authRouter)
 
 app.listen(PORT, () => {
-  console.log(`connected on port ${PORT}`)
+  console.log(` connected on port ${ PORT } `)
 })
 

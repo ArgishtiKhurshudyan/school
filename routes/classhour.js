@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.post('/', createClassHour)
 router.get('/', getClassHours)
-router.put('/:', updateHour)
-router.delete('/:', deleteHour)
+router.put('/:id', updateHour)
+router.delete('/:id', deleteHour)
 
 export default router

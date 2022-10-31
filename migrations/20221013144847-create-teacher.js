@@ -17,6 +17,7 @@ module.exports = {
       gender: {
         type: Sequelize.STRING
       },
+
       school_id: {
         type: Sequelize.INTEGER,
         allowNull: false,

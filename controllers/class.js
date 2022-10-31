@@ -1,7 +1,21 @@
 import { Class } from '../models'
+import Joi from "joi";
+
+const classTypeValidation = Joi.object({
+  name: Joi.string().min(3).max(20).required().messages({
+    'string.min': 'Name length must be at least 3 characters long!',
+    'string.max': 'Name length must be less than or equal to 20 characters long!'
+  }),
+})
 
 export const createClass = async (req, res) => {
   try {
+    const { error } = await classTypeValidation.validate(req.body)
+    if (error) {
+      return res.status(400).json({
+        message: error.details ? error.details[0].message : error.message
+      })
+    }
     const createClass = await Class.create({
       ...req.body,
     })

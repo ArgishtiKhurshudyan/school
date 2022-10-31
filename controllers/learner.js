@@ -1,8 +1,22 @@
 import { Learner, Teacher } from '../models'
 import {Op} from "sequelize";
+import Joi from "joi"
+
+const learnerValidation = Joi.object({
+  name: Joi.string().min(3).max(20).required().messages({
+    'string.min': 'Name length must be at least 3 characters long!',
+    'string.max': 'Name length must be less than or equal to 20 characters long!'
+  }),
+})
 
 export const createLearner = async (req, res) => {
   try {
+    const { error } = await learnerValidation.validate(req.body)
+    if (error) {
+      return res.status(400).json({
+        message: error.details ? error.details[0].message : error.message
+      })
+    }
     const learner = await Learner.create({
       ...req.body,
     })
@@ -25,7 +39,7 @@ export const createLearner = async (req, res) => {
         as:"teacher"
       }
     })
-    await learnerToBeAssignTeacher.addTeacher(teacherIds, { hrough: "Learner_Teachers" })
+    await learnerToBeAssignTeacher.addTeacher(teacherIds, { through: "Learner_Teachers" })
     const createdLearner = await  Learner.findOne({
       where: { id: learner.id },
       include: {

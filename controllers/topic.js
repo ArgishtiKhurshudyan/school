@@ -1,11 +1,25 @@
-import {Teacher, Topic} from '../models'
+import { Topic } from '../models'
+import Joi from "joi";
+
+const topicValidation = Joi.object({
+  name: Joi.string().min(3).max(20).required().messages({
+    'string.min': 'Name length must be at least 3 characters long!',
+    'string.max': 'Name length must be less than or equal to 20 characters long!'
+  }),
+})
 
 export const createTopic = async (req, res) => {
   try {
+    const { error } = await topicValidation.validate(req.body)
+    if (error) {
+      return res.status(400).json({
+        message: error.details ? error.details[0].message : error.message
+      })
+    }
     const topic = await Topic.create({
       ...req.body,
     })
-    return res.status(200).json({ topic: 'teacher created success!', data: topic })
+    return res.status(200).json({ topic: 'topic created success!', data: topic })
   } catch (err) {
     return res.status(500).json({ error: 'Something went wrong!' })
   }
@@ -43,7 +57,7 @@ export const updateTopic = async (req, res) => {
       return res.status(201).json({ message: "topic not found" })
     }
 
-    return  res.status(200).json({ message:"topic updated success!", data: topic })
+    return  res.status(200).json({ message: "topic updated success!", data: topic })
   } catch (err) {
     console.log("err", err)
   }
@@ -57,7 +71,7 @@ export const deleteTopic = async (req, res) => {
         id: id
       }
     })
-    return  res.status(200).json({ message: "topic delete success!" })
+    return  res.status(200).json({ message: "topic deleted success!" })
   } catch(err) {
     console.log("err", err)
   }

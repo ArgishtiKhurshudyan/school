@@ -1,4 +1,4 @@
-import {Rooms, Teacher, Topic} from '../models'
+import { Rooms } from '../models'
 
 export const createRoom = async (req, res) => {
   try {
@@ -24,6 +24,7 @@ export const getRoom = async (req, res) => {
     throw err
   }
 }
+
 export const updateRoom = async (req, res) => {
   try {
     const { id } = req.params;
@@ -56,7 +57,7 @@ export const deleteRoom = async (req, res) => {
         id: id
       }
     })
-    return  res.status(200).json({ message: "room delete success!" })
+    return  res.status(200).json({ message: "room deleted success!" })
   } catch(err) {
     console.log("err", err)
   }

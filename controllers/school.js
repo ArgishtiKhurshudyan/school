@@ -1,7 +1,20 @@
-import {School, Teacher, Topic} from '../models'
+import { School, Topic } from '../models'
+import Joi from "joi";
 
+const schoolNameValidation = Joi.object({
+  name: Joi.string().min(3).max(20).required().messages({
+    'string.min': 'Name length must be at least 3 characters long!',
+    'string.max': 'Name length must be less than or equal to 15 characters long!'
+  }),
+})
 export const createSchool = async (req, res) => {
   try {
+    const { error } = await schoolNameValidation.validate(req.body)
+    if (error) {
+      return res.status(400).json({
+        message: error.details ? error.details[0].message : error.message
+      })
+    }
     const school = await School.create({
       ...req.body,
     })

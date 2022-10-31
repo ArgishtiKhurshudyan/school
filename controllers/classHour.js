@@ -1,7 +1,27 @@
-import {Floor, ScheduleHours} from '../models'
+import { ScheduleHours } from '../models'
+import Joi from "joi";
 
-export const createClassHour= async (req, res) => {
+const classHourValidation = Joi.object({
+  start_time: Joi.string().min(2).max(5).required().messages({
+    'string.min': 'length must be at least 2 characters long!',
+    'string.max': 'length must be less than or equal to 5 characters long!'
+  }),
+  end_time: Joi.string().min(2).max(5).required().messages({
+    'string.min': 'length must be at least 2 characters long!',
+    'string.max': 'length must be less than or equal to 5 characters long!'
+  }),
+})
+
+
+
+export const createClassHour = async (req, res) => {
   try {
+    const { error } = await classHourValidation.validate(req.body)
+    if (error) {
+      return res.status(400).json({
+        message: error.details ? error.details[0].message : error.message
+      })
+    }
     const hour = await ScheduleHours.create({
       ...req.body,
     })
@@ -11,7 +31,7 @@ export const createClassHour= async (req, res) => {
   }
 }
 
-export const getClassHours= async (req, res) => {
+export const getClassHours = async (req, res) => {
   try {
     const hour = await ScheduleHours.findAll()
     return res.status(200).json({ data: hour })
@@ -44,7 +64,7 @@ export const updateHour = async (req, res) => {
   }
 }
 
-export const deleteHour= async (req, res) => {
+export const deleteHour = async (req, res) => {
   try {
     const { id } = req.params;
     await ScheduleHours.destroy({

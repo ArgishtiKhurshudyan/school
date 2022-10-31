@@ -3,6 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Learners', {
+
         id: {
           allowNull: false,
           autoIncrement: true,
@@ -32,7 +33,7 @@ module.exports = {
           type: Sequelize.DATE
         }
       },
-      {timestamp: true});
+      { timestamp: true });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Learners');

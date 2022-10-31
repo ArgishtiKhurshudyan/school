@@ -1,4 +1,4 @@
-import {ClassList, Teacher} from '../models'
+import { ClassList } from '../models'
 
 export const createClassList = async (req, res) => {
     try {

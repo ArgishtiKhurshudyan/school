@@ -1,7 +1,20 @@
-import {Floor, Teacher, Topic} from '../models'
+import { Floor } from '../models'
+import Joi from "joi";
 
+const floorValidation = Joi.object({
+  floor: Joi.string().min(3).max(5).required().messages({
+    'string.min': 'length must be at least 3 characters long!',
+    'string.max': 'length must be less than or equal to 5 characters long!'
+  }),
+})
 export const createFloor = async (req, res) => {
   try {
+    const { error } = await floorValidation.validate(req.body)
+    if (error) {
+      return res.status(400).json({
+        message: error.details ? error.details[0].message : error.message
+      })
+    }
     const floor = await Floor.create({
       ...req.body,
     })
