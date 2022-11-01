@@ -1,4 +1,4 @@
-import {User, Role} from "../models"
+import { User, Role } from "../models"
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import Joi from "joi";
@@ -19,6 +19,7 @@ const signUpSchema = Joi.object({
     'string.min': 'Password length must be at least 3 characters long!',
     'string.max': 'Password length must be less than or equal to 10 characters long!'
   }),
+
   confirmPassword: Joi.valid(Joi.ref("password")).error(() => new Error('Confirm password must match password!')),
   role: Joi.string()
 })
@@ -36,7 +37,7 @@ const generateAccessToken = (id, roles) => {
     id,
     roles
   }
-  return jwt.sign(payload, process.env.JWT, { expiresIn: '24h' })
+  return jwt.sign(payload, process.env.JWT,{ expiresIn: '24h' })
 }
 
 export const register = async (req, res) => {
@@ -55,11 +56,7 @@ export const register = async (req, res) => {
       },
       include: { model: Role }
     }))
-    const findRole = await Role.findOne({
-      where: {
-        name: req.body.role
-      }
-    })
+
     if (data) {
       res.status(401).json({ message: "user has already created!" });
     } else {
@@ -67,14 +64,10 @@ export const register = async (req, res) => {
         ...req.body,
         password: hash,
         confirmPassword: hash,
-        role_id: findRole.id
       });
       const userFind = await User.findOne({
         where: {
           id: user.id,
-        },
-        include: {
-          model: Role
         },
         attributes: {
           exclude: ['password', 'confirmPassword']

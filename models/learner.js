@@ -20,9 +20,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Learner.init({
     name: DataTypes.STRING,
-    gender: {
-      type: DataTypes.STRING
-    },
+    gender: DataTypes.STRING,
     class_id: {
       type: DataTypes.INTEGER,
       references: {

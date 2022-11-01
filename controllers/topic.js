@@ -35,7 +35,7 @@ export const getTopic = async (req, res) => {
     })
     return res.status(200).json({ data: topic })
   } catch (err) {
-    throw err
+    return  res.status(200).json({ error: "something went wrong!" })
   }
 }
 
@@ -60,6 +60,7 @@ export const updateTopic = async (req, res) => {
     return  res.status(200).json({ message: "topic updated success!", data: topic })
   } catch (err) {
     console.log("err", err)
+    return  res.status(200).json({ error: "something went wrong!" })
   }
 }
 
@@ -74,5 +75,6 @@ export const deleteTopic = async (req, res) => {
     return  res.status(200).json({ message: "topic deleted success!" })
   } catch(err) {
     console.log("err", err)
+    return  res.status(200).json({ error: "something went wrong!" })
   }
 }

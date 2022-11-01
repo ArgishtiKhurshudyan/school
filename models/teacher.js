@@ -20,15 +20,6 @@ module.exports = (sequelize, DataTypes) => {
 
   Teacher.init({
     name: DataTypes.STRING,
-    firstname: DataTypes.STRING,
-    lastname: DataTypes.STRING,
-    email:DataTypes.STRING,
-    password: DataTypes.STRING,
-    confirmPassword: DataTypes.STRING,
-    isAdmin: {
-      type:DataTypes.BOOLEAN,
-      default:false,
-    },
     profession: {
       type: DataTypes.STRING
     },

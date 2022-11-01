@@ -36,7 +36,7 @@ export const getClassHours = async (req, res) => {
     const hour = await ScheduleHours.findAll()
     return res.status(200).json({ data: hour })
   } catch (err) {
-    throw err
+    return res.status(500).json({ error: 'Something went wrong!' })
   }
 }
 
@@ -61,6 +61,7 @@ export const updateHour = async (req, res) => {
     return  res.status(200).json({ message:"class hour updated success!", data: hour })
   } catch (err) {
     console.log("err", err)
+    return res.status(500).json({ error: 'Something went wrong!' })
   }
 }
 
@@ -75,5 +76,6 @@ export const deleteHour = async (req, res) => {
     return  res.status(200).json({ message: "class hour deleted success!" })
   } catch(err) {
     console.log("err", err)
+    return res.status(500).json({ error: 'Something went wrong!' })
   }
 }

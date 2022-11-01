@@ -35,7 +35,7 @@ export const getClass = async (req, res) => {
     })
     return res.status(200).json({ data: getClass })
   } catch (err) {
-    throw err
+    return  res.status(200).json({ error: "something went wrong!" })
   }
 }
 
@@ -58,6 +58,7 @@ export const updateClass = async (req, res) => {
     return res.status(200).json({ message: 'class update success!', data: classRoom })
   } catch (err) {
     console.log("err", err)
+    return  res.status(200).json({ error: "something went wrong!" })
   }
 }
 
@@ -73,5 +74,6 @@ export const deleteClass = async (req, res) => {
     return res.status(201).json({ message: 'class deleted success!' })
   } catch (err) {
     console.log("err", err)
+    return  res.status(200).json({ error: "something went wrong!" })
   }
 }

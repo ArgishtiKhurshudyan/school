@@ -40,6 +40,7 @@ export const updateClassList = async (req, res) => {
     return res.status(200).json({ message: "class list updated success!", data: list })
   } catch(err) {
     console.log("err", err)
+    return res.status(500).json({ error: 'Something went wrong!' })
   }
 }
 
@@ -54,5 +55,6 @@ export const deleteList = async (req, res) => {
     return  res.status(200).json({ message: "class list deleted success!" })
   } catch(err) {
     console.log("err", err)
+    return res.status(500).json({ error: 'Something went wrong!' })
   }
 }

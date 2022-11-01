@@ -31,7 +31,7 @@ export const getDays = async (req, res) => {
     }
     return res.status(200).json({ data: weekday })
   } catch (err) {
-    throw err
+    return  res.status(200).json({ error: "something went wrong!" })
   }
 }
 
@@ -55,6 +55,7 @@ export const updateTDay = async (req, res) => {
     return  res.status(200).json({ message: "week day updated success!", data: weekday })
   } catch (err) {
     console.log("err", err)
+    return  res.status(200).json({ error: "something went wrong!" })
   }
 }
 
@@ -69,5 +70,6 @@ export const deleteDay = async (req, res) => {
     return  res.status(200).json({ message: "week day deleted success!" })
   } catch(err) {
     console.log("err", err)
+    return  res.status(200).json({ error: "something went wrong!" })
   }
 }

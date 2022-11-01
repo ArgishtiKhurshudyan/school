@@ -21,7 +21,7 @@ export const getRoom = async (req, res) => {
     })
     return res.status(200).json({ data: room })
   } catch (err) {
-    throw err
+    return  res.status(200).json({ error: "something went wrong!" })
   }
 }
 
@@ -46,6 +46,7 @@ export const updateRoom = async (req, res) => {
     return  res.status(200).json({ message:"room updated success!", data: room })
   } catch (err) {
     console.log("err", err)
+    return  res.status(200).json({ error: "something went wrong!" })
   }
 }
 
@@ -60,5 +61,6 @@ export const deleteRoom = async (req, res) => {
     return  res.status(200).json({ message: "room deleted success!" })
   } catch(err) {
     console.log("err", err)
+    return  res.status(200).json({ error: "something went wrong!" })
   }
 }

@@ -34,7 +34,7 @@ export const getSchool = async (req, res) => {
     })
     return res.status(200).json({ data: school })
   } catch (err) {
-    throw err
+    return  res.status(200).json({ error: "something went wrong!" })
   }
 }
 
@@ -46,7 +46,6 @@ export const updateSchool = async (req, res) => {
         id: id
       }
     })
-
     const school = await School.findOne({
       where: {
         id: id
@@ -56,9 +55,10 @@ export const updateSchool = async (req, res) => {
       return res.status(201).json({ message: "school not found" })
     }
 
-    return  res.status(200).json({ message:"school updated success!", data: topic })
+    return  res.status(200).json({ message: "school updated success!", data: school })
   } catch (err) {
     console.log("err", err)
+    return  res.status(200).json({ error: "something went wrong!" })
   }
 }
 
@@ -73,5 +73,6 @@ export const deleteSchool = async (req, res) => {
     return  res.status(200).json({ message: "school deleted success!" })
   } catch(err) {
     console.log("err", err)
+    return  res.status(200).json({ error: "something went wrong!" })
   }
 }

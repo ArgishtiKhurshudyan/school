@@ -34,7 +34,7 @@ export const getFloor = async (req, res) => {
     })
     return res.status(200).json({ data: floor })
   } catch (err) {
-    throw err
+    return res.status(500).json({ error: 'Something went wrong!' })
   }
 }
 
@@ -59,6 +59,7 @@ export const updateFloor = async (req, res) => {
     return  res.status(200).json({ message:"floor updated success!", data: floor })
   } catch (err) {
     console.log("err", err)
+    return res.status(500).json({ error: 'Something went wrong!' })
   }
 }
 
@@ -73,5 +74,6 @@ export const deleteFloor = async (req, res) => {
     return  res.status(200).json({ message: "floor deleted success!" })
   } catch(err) {
     console.log("err", err)
+    return res.status(500).json({ error: 'Something went wrong!' })
   }
 }

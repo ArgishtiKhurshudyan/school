@@ -1,5 +1,5 @@
 import { Learner, Teacher } from '../models'
-import {Op} from "sequelize";
+import { Op } from "sequelize";
 import Joi from "joi"
 
 const learnerValidation = Joi.object({
@@ -7,11 +7,14 @@ const learnerValidation = Joi.object({
     'string.min': 'Name length must be at least 3 characters long!',
     'string.max': 'Name length must be less than or equal to 20 characters long!'
   }),
+  gender: Joi.string(),
+
 })
 
 export const createLearner = async (req, res) => {
   try {
-    const { error } = await learnerValidation.validate(req.body)
+
+    const { error } = await learnerValidation.validate({name: req.body.name})
     if (error) {
       return res.status(400).json({
         message: error.details ? error.details[0].message : error.message
@@ -35,8 +38,8 @@ export const createLearner = async (req, res) => {
         id: learner.id
       },
       include: {
-        model:Teacher,
-        as:"teacher"
+        model: Teacher,
+        as: "teacher"
       }
     })
     await learnerToBeAssignTeacher.addTeacher(teacherIds, { through: "Learner_Teachers" })
@@ -44,7 +47,7 @@ export const createLearner = async (req, res) => {
       where: { id: learner.id },
       include: {
         model: Teacher,
-        as:"teacher"
+        as: "teacher"
       }
     })
     return res.status(200).json({ learner: 'learner created success!', data: createdLearner })
@@ -55,7 +58,7 @@ export const createLearner = async (req, res) => {
 }
 
 export const getLearner = async (req, res) => {
-  const {id} = req.params;
+  const { id } = req.params;
   try {
     const learner = await Learner.findOne({
       where: {
@@ -68,14 +71,13 @@ export const getLearner = async (req, res) => {
     })
     return res.status(200).json({ data: learner })
   } catch (err) {
-    throw err
+    return res.status(500).json({ error: 'Something went wrong!' })
   }
 }
 
 export const updateLearner = async (req, res) => {
   try {
-    const {id} = req.params;
-
+    const { id } = req.params;
     await Learner.update(req.body, {
       where: {
         id: id
@@ -92,19 +94,21 @@ export const updateLearner = async (req, res) => {
     return res.status(200).json({ message: 'learner updated success!', data: learner })
   } catch (err) {
     console.log("err", err)
+    return res.status(500).json({ error: 'Something went wrong!' })
   }
 }
 
 export const deleteLearner = async (req, res) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
     await Learner.destroy({
       where: {
         id: id
       }
     })
-    res.status(200).json({ message: "learner hide  success!" })
+    res.status(200).json({ message: "learner hide success!" })
   } catch (err) {
     console.log("err", err)
+    return res.status(500).json({ error: 'Something went wrong!' })
   }
 }
