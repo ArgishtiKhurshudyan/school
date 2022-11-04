@@ -5,9 +5,10 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Learner extends Model {
     static associate(models) {
-      const { Teacher, ClassList, Class } = models
-      Learner.belongsTo(Class, {foreignKey: 'class_id'})
-      Learner.hasMany(ClassList, {foreignKey: 'learner_id'})
+      const { Teacher, ClassList, Class, Gender } = models
+      Learner.belongsTo(Class, { foreignKey: 'class_id' })
+      Learner.hasMany(ClassList, { foreignKey: 'learner_id' })
+      Learner.belongsTo(Gender, { foreignKey: "gender_id" })
       Learner.belongsToMany(Teacher, {
         foreignKey: 'learner_id',
         joinTableAttributes: [],
@@ -20,11 +21,18 @@ module.exports = (sequelize, DataTypes) => {
 
   Learner.init({
     name: DataTypes.STRING,
-    gender: DataTypes.STRING,
     class_id: {
       type: DataTypes.INTEGER,
       references: {
         model: 'Classes',
+        key: 'id'
+      },
+      onDelete: "cascade",
+    },
+    gender_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Genders',
         key: 'id'
       },
       onDelete: "cascade",

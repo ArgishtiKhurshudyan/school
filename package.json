@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed": "npx sequelize-cli db:seed:all",
     "make-seed": "npx sequelize-cli seed:generate --name demo-days",
-    "make-model": "npx sequelize-cli model:generate --name Role --attributes name:string",
+    "make-model": "npx sequelize-cli model:generate --name Gender --attributes name:string",
     "migrate": "npx sequelize-cli db:migrate",
     "undo": "npx sequelize-cli db:migrate:undo",
     "watch": "nodemon -r esm index.js",

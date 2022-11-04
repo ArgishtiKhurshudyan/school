@@ -14,19 +14,30 @@ module.exports = {
       profession: {
         type: Sequelize.STRING
       },
-      gender: {
-        type: Sequelize.STRING
+      gender_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: "Genders",
+          key: 'id'
+        }
       },
-
+      topic_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: "Topics",
+          key: 'id'
+        }
+      },
       school_id: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
           model: "Schools",
           key: 'id'
         }
       },
-
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

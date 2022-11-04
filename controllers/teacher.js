@@ -1,40 +1,70 @@
-import { Teacher, Learner } from '../models'
-import { Op } from "sequelize";
+import { Teacher, Learner, Topic, Gender } from '../models'
+import Joi from "joi";
+
+const teacherValidation = Joi.object({
+  name: Joi.string().min(3).max(20).required().messages({
+    'string.min': 'Name length must be at least 3 characters long!',
+    'string.max': 'Name length must be less than or equal to 20 characters long!'
+  }),
+  gender: Joi.string(),
+})
 
 export const createTeacher = async (req, res) => {
   try {
+    const { error } = await teacherValidation.validate({ name: req.body.name })
+    if (error) {
+      return res.status(400).json({
+        message: error.details ? error.details[0].message : error.message
+      })
+    }
     const teacher = await Teacher.create({
       ...req.body,
     })
-    const learner = await Learner.findAll({
+    const teacherFind = await Teacher.findOne({
       where: {
-        id: {
-          [Op.in]: req.body.learner
-        }
+        id: teacher.id,
       },
-      attributes: ["id"]
+      include: [
+        {
+          model: Gender,
+        },
+        {
+          model: Topic,
+        },
+      ],
     })
-    const learnerIds = learner.map(i => i.id)
-    const teacherToBeAssignLearner = await Teacher.findOne({
-      where: {
-        id: teacher.id
-      },
-      include: {
-        model: Learner,
-        as: "learner"
-      }
-    })
-    await teacherToBeAssignLearner.addLearner( learnerIds, { through: "Learner_Teachers" } )
-    const createdTeacher = await  Teacher.findOne({
-      where: { id: teacher.id },
-      include: {
-        model: Learner,
-        as: "learner"
-      }
-    })
-    return res.status(200).json({ teacher: 'teacher created success!', data: createdTeacher })
+
+    // const learner = await Learner.findAll({
+    //   where: {
+    //     id: {
+    //       [Op.in]: req.body.learner
+    //     }
+    //   },
+    //   attributes: ["id"]
+    // })
+    // const learnerIds = learner.map(i => i.id)
+    // const teacherToBeAssignLearner = await Teacher.findOne({
+    //   where: {
+    //     id: teacher.id
+    //   },
+    //   include: {
+    //     model: Learner,
+    //     as: "learner"
+    //   }
+    // })
+    // await teacherToBeAssignLearner.addLearner(learnerIds, { through: "Learner_Teachers" })
+    // const createdTeacher = await Teacher.findOne({
+    //   where: { id: teacher.id },
+    //   include: {
+    //     model: Learner,
+    //     as: "learner"
+    //   }
+    // })
+    // console.log("teacherfind", createdTeacher)
+
+    return res.status(200).json({ teacher: 'teacher created success!', data: teacherFind })
   } catch (err) {
-    console.log(err)
+    console.log("error", err)
     return res.status(400).json({ error: 'Something went wrong!' })
   }
 }
@@ -46,10 +76,18 @@ export const getTeacher = async (req, res) => {
       where: {
         id: id,
       },
-      include: {
+      include: [
+        {
         model: Learner,
         as: "learner"
-      }
+        },
+        {
+          model: Gender,
+        },
+        {
+          model: Topic,
+        },
+      ]
     })
     return res.status(200).json({ data: teacher })
   } catch (err) {

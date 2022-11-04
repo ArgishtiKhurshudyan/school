@@ -5,8 +5,9 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Topic extends Model {
     static associate(models) {
-      const {ClassList} = models
-      Topic.hasOne(ClassList, {foreignKey: 'topic_id'})
+      const { ClassList, Teacher } = models
+      Topic.hasOne(ClassList, { foreignKey: 'topic_id' })
+      Topic.hasOne(Teacher, { foreignKey: 'topic_id' })
     }
   }
 

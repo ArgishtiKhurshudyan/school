@@ -13,14 +13,19 @@ module.exports = {
         name: {
           type: Sequelize.STRING
         },
-        gender: {
-          type: Sequelize.STRING
-        },
         class_id: {
           type: Sequelize.INTEGER,
           allowNull: false,
           references: {
             model: "Classes",
+            key: 'id'
+          }
+        },
+        gender_id: {
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          references: {
+            model: "Genders",
             key: 'id'
           }
         },

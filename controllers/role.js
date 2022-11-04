@@ -10,7 +10,6 @@ export const createRole = async (req, res) => {
   }
 }
 
-
 export const getRole = async (req, res) => {
   const { id } = req.params;
   try {
@@ -24,7 +23,6 @@ export const getRole = async (req, res) => {
     return  res.status(200).json({ error: "something went wrong!" })
   }
 }
-
 
 export const updateRole = async (req, res) => {
   try {
@@ -48,7 +46,6 @@ export const updateRole = async (req, res) => {
     return  res.status(200).json({ error: "something went wrong!" })
   }
 }
-
 
 export const deleteRole = async (req, res) => {
   try {

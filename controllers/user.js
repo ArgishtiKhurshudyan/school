@@ -1,4 +1,4 @@
-import {Role, User} from '../models'
+import { Role, User } from '../models'
 
 export const createUser = async (req, res) => {
   try {
@@ -9,7 +9,6 @@ export const createUser = async (req, res) => {
     return  res.status(400).json({ error: "something went wrong" })
   }
 }
-
 
 export const getUser = async (req, res) => {
   const { id } = req.params;
@@ -54,7 +53,6 @@ export const updateUser = async (req, res) => {
     return  res.status(200).json({ error: "something went wrong!" })
   }
 }
-
 
 export const deleteUser = async (req, res) => {
   try {

@@ -1,4 +1,4 @@
-import { ClassList } from '../models'
+import { ClassList, Topic, Class, Teacher, WeekDays,ScheduleHours, Rooms } from '../models'
 
 export const createClassList = async (req, res) => {
     try {
@@ -13,7 +13,17 @@ export const createClassList = async (req, res) => {
 
 export const getClassLists = async (req, res) => {
     try {
-    const classLists = await ClassList.findAll()
+    const classLists = await ClassList.findAll({
+      include: [
+        {model: Topic},
+        {model: Class},
+        {model: Teacher},
+        {model: WeekDays},
+        {model: ScheduleHours},
+        {model: Rooms},
+
+      ]
+    })
     return res.status(200).json({ data: classLists })
   } catch (err) {
     return res.status(401).json({ error: "something went wrong!" })
