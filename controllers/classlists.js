@@ -1,7 +1,7 @@
-import { ClassList, Topic, Class, Teacher, WeekDays,ScheduleHours, Rooms } from '../models'
+import { ClassList, Topic, Class, Teacher, WeekDays, ScheduleHours, Rooms } from '../models'
 
 export const createClassList = async (req, res) => {
-    try {
+  try {
     const classList = await ClassList.create({
       ...req.body,
     })
@@ -12,17 +12,47 @@ export const createClassList = async (req, res) => {
 }
 
 export const getClassLists = async (req, res) => {
-    try {
+  try {
     const classLists = await ClassList.findAll({
       include: [
-        {model: Topic},
-        {model: Class},
-        {model: Teacher},
-        {model: WeekDays},
-        {model: ScheduleHours},
-        {model: Rooms},
+        {
+          model: Topic,
+          attributes: {
+            exclude: ['createdAt', 'updatedAt']
+          }
+        },
+        {
+          model: Class,
+          attributes: {
+            exclude: ['createdAt', 'updatedAt']
+          }
+        },
+        {
+          model: Teacher,
+          attributes: {
+            exclude: ['createdAt', 'updatedAt']
+          }
+        },
+        {
+          model: WeekDays,
+          attributes: {
+            exclude: ['createdAt', 'updatedAt']
+          }
+        },
+        {
+          model: ScheduleHours,
+          attributes: {
+            exclude: ['createdAt', 'updatedAt']
+          }
+        },
+        {
+          model: Rooms,
+          attributes: {
+            exclude: ['createdAt', 'updatedAt']
+          }
+        },
 
-      ]
+      ],
     })
     return res.status(200).json({ data: classLists })
   } catch (err) {
@@ -32,7 +62,7 @@ export const getClassLists = async (req, res) => {
 
 export const updateClassList = async (req, res) => {
   try {
-    const { id } = req.params;
+    const {id} = req.params;
     await ClassList.update(req.body, {
       where: {
         id: id
@@ -48,7 +78,7 @@ export const updateClassList = async (req, res) => {
       return res.status(200).json({ message: "class list is not found" })
     }
     return res.status(200).json({ message: "class list updated success!", data: list })
-  } catch(err) {
+  } catch (err) {
     console.log("err", err)
     return res.status(500).json({ error: 'Something went wrong!' })
   }
@@ -56,14 +86,14 @@ export const updateClassList = async (req, res) => {
 
 export const deleteList = async (req, res) => {
   try {
-    const { id } = req.params;
+    const {id} = req.params;
     await ClassList.destroy({
       where: {
         id: id
       }
     })
-    return  res.status(200).json({ message: "class list deleted success!" })
-  } catch(err) {
+    return res.status(200).json({ message: "class list deleted success!" })
+  } catch (err) {
     console.log("err", err)
     return res.status(500).json({ error: 'Something went wrong!' })
   }

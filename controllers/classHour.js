@@ -48,7 +48,6 @@ export const updateHour = async (req, res) => {
         id: id
       }
     })
-
     const hour = await ScheduleHours.findOne({
       where: {
         id: id
@@ -57,7 +56,6 @@ export const updateHour = async (req, res) => {
     if (!hour) {
       return res.status(201).json({ message: "class hour not found" })
     }
-
     return  res.status(200).json({ message:"class hour updated success!", data: hour })
   } catch (err) {
     console.log("err", err)

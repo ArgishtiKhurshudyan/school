@@ -1,11 +1,13 @@
 import { WeekDays } from '../models'
 import Joi from "joi";
+
 const weekDaysValidation = Joi.object({
   name: Joi.string().min(3).max(10).required().messages({
     'string.min': 'Name length must be at least 3 characters long!',
     'string.max': 'Name length must be less than or equal to 10 characters long!'
   }),
 })
+
 export const createDay = async (req, res) => {
   try {
     const { error } = await weekDaysValidation.validate(req.body)
@@ -43,7 +45,6 @@ export const updateTDay = async (req, res) => {
         id: id
       }
     })
-
     const weekday = await WeekDays.findOne({
       where: {
         id: id

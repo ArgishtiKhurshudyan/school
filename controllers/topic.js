@@ -19,6 +19,7 @@ export const createTopic = async (req, res) => {
     const topic = await Topic.create({
       ...req.body,
     })
+    
     return res.status(200).json({ topic: 'topic created success!', data: topic })
   } catch (err) {
     return res.status(500).json({ error: 'Something went wrong!' })
