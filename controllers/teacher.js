@@ -1,6 +1,8 @@
 import { Teacher, Learner, Topic, Gender } from '../models'
 import Joi from "joi";
-
+import  fs from 'fs';
+import { stringify } from 'csv-stringify';
+// import  path from '../resources/link'
 const teacherValidation = Joi.object({
   name: Joi.string().min(3).max(20).required().messages({
     'string.min': 'Name length must be at least 3 characters long!',
@@ -130,5 +132,27 @@ export const deleteTeacher = async (req, res) => {
   } catch(err) {
     console.log("err", err)
     return  res.status(200).json({ error: "something went wrong!" })
+  }
+}
+
+
+export const exportTeachers = async (req, res) => {
+  const LINK = process.env.LINK
+  try {
+    const teachers = await Teacher.findAll({
+      attributes: [ 'id', 'name', 'profession' ],
+      raw: true,
+    })
+    if (!fs.existsSync('./resources/teacher-list')){
+      fs.mkdirSync('./resources/teacher-list');
+    }
+    stringify(teachers, {
+      header: true
+    }, function (err, output) {
+      fs.writeFile('./resources/teacher-list/teacher-data.csv', output, {}, function (){});
+    })
+    return res.status(200).json({ Link: LINK })
+  } catch (err) {
+    console.log('err', err)
   }
 }
