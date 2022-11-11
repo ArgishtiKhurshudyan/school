@@ -1,4 +1,4 @@
-import { Learner, Teacher, Gender } from '../models'
+import { Learner, Teacher, Gender, Image } from '../models'
 import Joi from "joi"
 
 const learnerValidation = Joi.object({
@@ -64,8 +64,8 @@ export const createLearner = async (req, res) => {
 }
 
 export const getLearner = async (req, res) => {
-  const { id } = req.params;
   try {
+    const { id } = req.params;
     const learner = await Learner.findOne({
       where: {
         id: id
@@ -76,6 +76,9 @@ export const getLearner = async (req, res) => {
       },
         {
           model: Gender
+        } ,
+        {
+          model: Image
         }
       ]
     })

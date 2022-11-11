@@ -5,7 +5,7 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Teacher extends Model {
     static associate(models) {
-      const { School, Learner, ClassList, Gender, Topic } = models
+      const { School, Learner, ClassList, Gender, Topic, Image } = models
       Teacher.belongsTo(School, { foreignKey: 'school_id' })
       Teacher.hasOne(ClassList, { foreignKey: 'teacher_id' })
       Teacher.belongsTo(Gender, { foreignKey: 'gender_id' })
@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         paranoid: true, raw: true,
         as: 'learner'
       })
+      Teacher.hasMany(Image, { foreignKey: 'imageableId' })
     }
   }
 

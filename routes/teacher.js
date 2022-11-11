@@ -1,10 +1,11 @@
 import express from 'express'
 import {createTeacher, getTeacher, deleteTeacher, updateTeacher, exportTeachers} from "../controllers/teacher";
 import {verifyToken} from "../verifyToken";
+import {uploadImg} from "../upload";
 
 const router = express.Router()
 
-router.post('/', verifyToken, createTeacher)
+router.post('/',verifyToken, createTeacher)
 router.get('/export', verifyToken, exportTeachers)
 router.get('/:id', verifyToken, getTeacher)
 router.put('/:id', verifyToken, updateTeacher)

@@ -1,8 +1,9 @@
-import { Teacher, Learner, Topic, Gender } from '../models'
+import {Teacher, Learner, Topic, Gender, Image} from '../models'
 import Joi from "joi";
 import  fs from 'fs';
 import { stringify } from 'csv-stringify';
-// import  path from '../resources/link'
+import multer from "multer";
+
 const teacherValidation = Joi.object({
   name: Joi.string().min(3).max(20).required().messages({
     'string.min': 'Name length must be at least 3 characters long!',
@@ -13,58 +14,44 @@ const teacherValidation = Joi.object({
 
 export const createTeacher = async (req, res) => {
   try {
-    const { error } = await teacherValidation.validate({ name: req.body.name })
-    if (error) {
-      return res.status(400).json({
-        message: error.details ? error.details[0].message : error.message
-      })
-    }
-    const teacher = await Teacher.create({
-      ...req.body,
-    })
-    const teacherFind = await Teacher.findOne({
-      where: {
-        id: teacher.id,
+    // const { error } = await teacherValidation.validate({ name: req.body.name })
+    // if (error) {
+    //   return res.status(400).json({
+    //     message: error.details ? error.details[0].message : error.message
+    //   })
+    // }
+    // const teacher = await Teacher.create({
+    //   ...req.body,
+    // })
+    // const teacherFind = await Teacher.findOne({
+    //   where: {
+    //     id: teacher.id,
+    //   },
+    //   include: [
+    //     {
+    //       model: Gender,
+    //     },
+    //     {
+    //       model: Topic,
+    //     },
+    //   ],
+    // })
+
+
+    const storage = await multer.diskStorage({
+      destination: function (req, file, cb) {
+        cb(null, '/');;
       },
-      include: [
-        {
-          model: Gender,
-        },
-        {
-          model: Topic,
-        },
-      ],
-    })
+      filename: function (req, file, cb) {
+        cb(null, Date.now() + '-' + file.originalname);
+        console.log('filename', req);
+      }
+    });
+    // const upload = multer({ storage: storage });
+    const uploadImg = multer({storage: storage}).single('images')
+    console.log(uploadImg)
 
-    // const learner = await Learner.findAll({
-    //   where: {
-    //     id: {
-    //       [Op.in]: req.body.learner
-    //     }
-    //   },
-    //   attributes: ["id"]
-    // })
-    // const learnerIds = learner.map(i => i.id)
-    // const teacherToBeAssignLearner = await Teacher.findOne({
-    //   where: {
-    //     id: teacher.id
-    //   },
-    //   include: {
-    //     model: Learner,
-    //     as: "learner"
-    //   }
-    // })
-    // await teacherToBeAssignLearner.addLearner(learnerIds, { through: "Learner_Teachers" })
-    // const createdTeacher = await Teacher.findOne({
-    //   where: { id: teacher.id },
-    //   include: {
-    //     model: Learner,
-    //     as: "learner"
-    //   }
-    // })
-    // console.log("teacherfind", createdTeacher)
-
-    return res.status(200).json({ teacher: 'teacher created success!', data: teacherFind })
+    return res.status(200).json({ teacher: 'teacher created success!', data: 'teacherFind' })
   } catch (err) {
     console.log("error", err)
     return res.status(400).json({ error: 'Something went wrong!' })
@@ -89,6 +76,9 @@ export const getTeacher = async (req, res) => {
         {
           model: Topic,
         },
+        {
+          model: Image
+        }
       ]
     })
     return res.status(200).json({ data: teacher })
