@@ -1,9 +1,9 @@
 import {Teacher, Learner, Topic, Gender, Image} from '../models'
 import Joi from "joi";
 import  fs from 'fs';
+import  path from 'path';
 import { stringify } from 'csv-stringify';
-import multer from "multer";
-
+import {Op} from "sequelize";
 const teacherValidation = Joi.object({
   name: Joi.string().min(3).max(20).required().messages({
     'string.min': 'Name length must be at least 3 characters long!',
@@ -23,34 +23,30 @@ export const createTeacher = async (req, res) => {
     // const teacher = await Teacher.create({
     //   ...req.body,
     // })
-    // const teacherFind = await Teacher.findOne({
-    //   where: {
-    //     id: teacher.id,
-    //   },
-    //   include: [
-    //     {
-    //       model: Gender,
-    //     },
-    //     {
-    //       model: Topic,
-    //     },
-    //   ],
-    // })
 
-
-    const storage = await multer.diskStorage({
-      destination: function (req, file, cb) {
-        cb(null, '/');;
-      },
-      filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname);
-        console.log('filename', req);
-      }
-    });
-    // const upload = multer({ storage: storage });
-    const uploadImg = multer({storage: storage}).single('images')
-    console.log(uploadImg)
-
+    for (const i of req.files){
+      const filePath = path.join(`resources/images/${ i.originalname }`)
+      const shouldSavePath = `${process.env.API_URL}/${filePath}`
+      fs.writeFile(filePath, i.buffer, {}, function (){})
+     const teacher = await Teacher.create({
+        ...req.body,
+        filePath: shouldSavePath
+      })
+      const teacherFind = await Teacher.findOne({
+        where: {
+          id: teacher.id,
+        },
+        include: [
+          {
+            model: Gender,
+          },
+          {
+            model: Topic,
+          },
+        ],
+      })
+      await Teacher.update({ filePath: shouldSavePath },{ where: { id: { [Op.in]: JSON.parse(req.body.ids) }}})
+    }
     return res.status(200).json({ teacher: 'teacher created success!', data: 'teacherFind' })
   } catch (err) {
     console.log("error", err)

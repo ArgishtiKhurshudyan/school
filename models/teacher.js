@@ -26,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     profession: {
       type: DataTypes.STRING
     },
+    filePath: DataTypes.STRING,
     gender_id: {
       type: DataTypes.INTEGER,
       references: {
