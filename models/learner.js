@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   class Learner extends Model {
     static associate(models) {
       const { Teacher, ClassList, Class, Gender, Image } = models
-      Learner.belongsTo(Class, { foreignKey: 'class_id' })
+      // Learner.belongsTo(Class, { foreignKey: 'class_id' })
       Learner.hasMany(ClassList, { foreignKey: 'learner_id' })
       Learner.belongsTo(Gender, { foreignKey: "gender_id" })
       Learner.hasMany(Image, { foreignKey: 'imageableId' })
@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Learner.init({
     name: DataTypes.STRING,
+    filePath: DataTypes.STRING,
     class_id: {
       type: DataTypes.INTEGER,
       references: {

@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       ClassList.belongsTo(Teacher, {foreignKey: 'teacher_id'})
       ClassList.belongsTo(ScheduleHours, {foreignKey: 'scheduleHours_id'})
       ClassList.belongsTo(Topic, {foreignKey: 'topic_id'})
-      ClassList.belongsTo(Class, {foreignKey: 'class_id'})
+      // ClassList.belongsTo(Class, {foreignKey: 'class_id'})
       ClassList.belongsTo(Rooms, {foreignKey: 'room_id'})
       ClassList.belongsTo(WeekDays, {foreignKey: 'weekday_id'})
     }

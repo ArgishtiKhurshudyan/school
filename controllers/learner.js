@@ -1,5 +1,7 @@
 import { Learner, Teacher, Gender, Image } from '../models'
 import Joi from "joi"
+import path from "path";
+import fs from "fs";
 
 const learnerValidation = Joi.object({
   name: Joi.string().min(3).max(20).required().messages({
@@ -11,51 +13,39 @@ const learnerValidation = Joi.object({
 
 export const createLearner = async (req, res) => {
   try {
-    const { error } = await learnerValidation.validate({ name: req.body.name })
+    const { error } = await learnerValidation.validate({ name: JSON.parse(req.body.data).name })
     if (error) {
       return res.status(400).json({
         message: error.details ? error.details[0].message : error.message
       })
     }
+
+   let shouldSavePath;
+    for (const i of req.files) {
+      const filePath = path.join(`resources/students-images/${i.originalname}`)
+      shouldSavePath = `${process.env.API_URL}/${filePath}`
+      fs.writeFile(filePath, i.buffer, {}, function () {
+      })
+    }
+
     const learner = await Learner.create({
-      ...req.body,
+      ...JSON.parse(req.body.data),
+      filePath: shouldSavePath
     })
 
     const learnerFind = await Learner.findOne({
       where: {
         id: learner.id
       },
-      include: {
+      include: [{
         model: Gender
-      }
+      },
+        {
+        model: Image
+      },
+
+      ]
     })
-    // const teacher = await Teacher.findAll({
-    //   where: {
-    //     id: {
-    //       [Op.in]: req.body.teacher
-    //     }
-    //   },
-    //   attributes: ["id"]
-    // })
-    //
-    // const teacherIds = teacher.map(i => i.id)
-    // const learnerToBeAssignTeacher = await Learner.findOne({
-    //   where: {
-    //     id: learner.id
-    //   },
-    //   include: {
-    //     model: Teacher,
-    //     as: "teacher"
-    //   }
-    // })
-    // await learnerToBeAssignTeacher.addTeacher(teacherIds, { through: "Learner_Teachers" })
-    // const createdLearner = await  Learner.findOne({
-    //   where: { id: learner.id },
-    //   include: {
-    //     model: Teacher,
-    //     as: "teacher"
-    //   }
-    // })
     return res.status(200).json({ learner: 'learner created success!', data: learnerFind })
   } catch (err) {
     console.log("err", err)
@@ -125,3 +115,35 @@ export const deleteLearner = async (req, res) => {
     return res.status(500).json({ error: 'Something went wrong!' })
   }
 }
+
+
+
+
+
+// const teacher = await Teacher.findAll({
+//   where: {
+//     id: {
+//       [Op.in]: req.body.teacher
+//     }
+//   },
+//   attributes: ["id"]
+// })
+//
+// const teacherIds = teacher.map(i => i.id)
+// const learnerToBeAssignTeacher = await Learner.findOne({
+//   where: {
+//     id: learner.id
+//   },
+//   include: {
+//     model: Teacher,
+//     as: "teacher"
+//   }
+// })
+// await learnerToBeAssignTeacher.addTeacher(teacherIds, { through: "Learner_Teachers" })
+// const createdLearner = await  Learner.findOne({
+//   where: { id: learner.id },
+//   include: {
+//     model: Teacher,
+//     as: "teacher"
+//   }
+// })

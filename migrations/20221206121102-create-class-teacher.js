@@ -1,7 +1,8 @@
 'use strict';
+/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Teachers', {
+    await queryInterface.createTable('Class_Teachers', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,44 +12,23 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      profession: {
-        type: Sequelize.STRING
-      },
-      filePath: {
-        type: Sequelize.STRING
-      },
-      gender_id: {
+      class_id: {
         type: Sequelize.INTEGER,
         allowNull: true,
         references: {
-          model: "Genders",
-          key: 'id'
-        }
-      },
-      imageableId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Image',
+          model: "Classes",
           key: 'id'
         },
         onDelete: "cascade",
       },
-      topic_id: {
+      teacher_id: {
         type: Sequelize.INTEGER,
         allowNull: true,
         references: {
-          model: "Topics",
+          model: "Teachers",
           key: 'id'
-        }
-      },
-
-      school_id: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        references: {
-          model: "Schools",
-          key: 'id'
-        }
+        },
+        onDelete: "cascade",
       },
       createdAt: {
         allowNull: false,
@@ -61,6 +41,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Teachers');
+    await queryInterface.dropTable('Class_Teachers');
   }
 };

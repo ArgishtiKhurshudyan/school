@@ -2,7 +2,6 @@ import * as path from "path";
 const express = require("express");
 const dotenv = require("dotenv");
 import cookieParser from "cookie-parser";
-import multer from "multer";
 import cors from "cors";
 import teacherRouter from './routes/teacher'
 import learnerRouter from './routes/learner'
@@ -24,7 +23,6 @@ const resources = path.join(__dirname, 'resources')
 const app = express()
 app.use(bodyParser.json())
 const PORT = process.env.PORT || 3333;
-// app.use('/resources', path.join(__dirname, 'resources') )
 app.use('/resources', express.static(resources));
 app.use(cookieParser())
 app.use(express.json())

@@ -28,15 +28,32 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="c5e654df-738c-44ae-86b7-b9d04d117253">
-      <console name="Connection" type="STANDARD" schema="information_schema" session="Main" />
+    <connection id="09fe1cdc-bfba-4aa7-a37a-2e856deeba0d">
+      <console name="shcool" type="STANDARD" schema="information_schema" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files />
+    <open-files>
+      <object connection-id="09fe1cdc-bfba-4aa7-a37a-2e856deeba0d" object-ref="schemas/public/tables/Roles" />
+      <object connection-id="09fe1cdc-bfba-4aa7-a37a-2e856deeba0d" object-ref="schemas/public/tables/Images" />
+      <object connection-id="09fe1cdc-bfba-4aa7-a37a-2e856deeba0d" object-ref="schemas/public/tables/Learners" />
+      <object connection-id="09fe1cdc-bfba-4aa7-a37a-2e856deeba0d" object-ref="schemas/public/tables/Genders" />
+    </open-files>
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="c5e654df-738c-44ae-86b7-b9d04d117253" />
+    <connection id="09fe1cdc-bfba-4aa7-a37a-2e856deeba0d" />
+  </component>
+  <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="09fe1cdc-bfba-4aa7-a37a-2e856deeba0d" dataset="public.Learner_Teachers" active-filter-id="19470038-6b77-4f1d-b2df-b66d57e55f51">
+      <filter id="19470038-6b77-4f1d-b2df-b66d57e55f51" name="Filter 1" temporary="false" custom-name="false" type="basic" join-type="AND">
+        <condition column="id" operator="=" value="" active="true" />
+      </filter>
+    </filter-actions>
+    <filter-actions connection-id="09fe1cdc-bfba-4aa7-a37a-2e856deeba0d" dataset="public.Images" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="09fe1cdc-bfba-4aa7-a37a-2e856deeba0d" dataset="public.Learners" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="09fe1cdc-bfba-4aa7-a37a-2e856deeba0d" dataset="public.Genders" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="09fe1cdc-bfba-4aa7-a37a-2e856deeba0d" dataset="public.Classes" active-filter-id="" />
+    <filter-actions connection-id="09fe1cdc-bfba-4aa7-a37a-2e856deeba0d" dataset="public.Roles" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -67,9 +84,9 @@
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="c5e654df-738c-44ae-86b7-b9d04d117253" active="true" signed="true">
+      <connection id="09fe1cdc-bfba-4aa7-a37a-2e856deeba0d" active="true" signed="true">
         <database>
-          <name value="Connection" />
+          <name value="shcool" />
           <description value="" />
           <database-type value="POSTGRES" />
           <config-type value="BASIC" />
@@ -154,7 +171,7 @@
     </connections>
     <browser-settings>
       <general>
-        <display-mode value="TABBED" />
+        <display-mode value="SIMPLE" />
         <navigation-history-size value="100" />
         <show-object-details value="false" />
       </general>

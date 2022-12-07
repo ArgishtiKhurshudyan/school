@@ -15,20 +15,20 @@ const signUpSchema = Joi.object({
   }),
 
   email: Joi.string().email().required().messages({ 'string.email': 'Email must be valid email' }),
-  password: Joi.string().min(3).max(10).required().messages({
+  password: Joi.string().min(3).max(20).required().messages({
     'string.min': 'Password length must be at least 3 characters long!',
-    'string.max': 'Password length must be less than or equal to 10 characters long!'
+    'string.max': 'Password length must be less than or equal to 20 characters long!'
   }),
 
-  confirmPassword: Joi.valid(Joi.ref("password")).error(() => new Error('Confirm password must match password!')),
+  confirmPassword: Joi.valid(Joi.ref("password")).error(() => new Error('Confirm password must be match password!')),
   role: Joi.string()
 })
 
 const signInSchema = Joi.object({
   email: Joi.string().email().required().messages({ 'string.email': 'Email must be valid email' }),
-  password: Joi.string().min(3).max(10).required().messages({
+  password: Joi.string().min(3).max(20).required().messages({
     'string.min': 'Password length must be at least 3 characters long!',
-    'string.max': 'Password length must be less than or equal to 10 characters long!'
+    'string.max': 'Password length must be less than or equal to 20 characters long!'
   })
 })
 
